@@ -2,35 +2,36 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo-deployment
-  labels:
+  labels: # kv-pair for k8s components
     app: mongo
-spec:
-  replicas: 1
-  selector:
+spec: # deployment specification
+  replicas: 1 # how many pod(s) to create
+  selector: # decide which pods belong to this deployment
     matchLabels:
       app: mongo
-  template:
+  template: # configuration for pod
     metadata:
       labels:
         app: mongo
     spec:
-      containers:
+      containers: # list of containers , define image and port 
       - name: mongodb
         image: mongo:5.0
         ports:
         - containerPort: 27017
-        env:
+        env: 
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
-              key: mongo-user
+              name: mongo-secret  # name of Secret
+              key: mongo-user     # key of the Secret
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: mongo-password  
----
+              key: mongo-password
+--- # YAML syntax for next configuration
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -41,4 +42,4 @@ spec:
   ports:
     - protocol: TCP
       port: 27017
-      targetPort: 27017
+      targetPort: 27017 # containerPort of Deployment

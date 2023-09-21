@@ -2,43 +2,45 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp-deployment
-  labels:
+  labels: 
     app: webapp
-spec:
-  replicas: 1
-  selector:
+spec: # deployment specification
+  replicas: 1 # how many pod(s) to create
+  selector: # decide which pods belong to this deployment
     matchLabels:
       app: webapp
-  template:
+  template: # configuration for pod
     metadata:
       labels:
         app: webapp
     spec:
-      containers:
-      - name: webapp
-        image: nanajanashia/k8s-demo-app:v1.0
+      containers: # list of containers , define image and port 
+      - name: webappdb
+        image: nanajanashia/k8s-demo-app:v1.0 
         ports:
-        - containerPort: 3000
+        - containerPort: 3000 # the node.js app listens on port 3000
         env:
         - name: USER_NAME
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
-              key: mongo-user
+              name: mongo-secret  # name of Secret
+              key: mongo-user     # key of the Secret
         - name: USER_PWD
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: mongo-password 
+              key: mongo-password
         - name: DB_URL
           valueFrom:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
----
+
+--- # YAML syntax for next configuration
+
 apiVersion: v1
 kind: Service
-metadata:
+metadata: 
   name: webapp-service
 spec:
   type: NodePort
@@ -47,5 +49,8 @@ spec:
   ports:
     - protocol: TCP
       port: 3000
-      targetPort: 3000
+      targetPort: 3000 # containerPort of Deployment
+      # exposes the Service on each Node's IP at a static port
+      # note that port number ranges from 30000-32767
       nodePort: 30100
+

@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: mongo-config
 data:
-  mongo-url: mongo-service
+  mongo-url: mongo-service #service name
+  
