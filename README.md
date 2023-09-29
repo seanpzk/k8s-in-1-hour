@@ -1,3 +1,26 @@
+# Project Reflection and Learning Journey (by seanpzk)
+
+## Description:
+Exploring Kubernetes fundamentals through hands-on learning
+
+## Learnings:
+- K8s components - pods, node, service, ingress, etc..
+- Deployment's purpose and management - writing configuration (YAML file) to deploy
+- Basic debugging commands 
+- Data persistence in k8
+- Namespace
+
+## Tools used:
+- **Minikube** to deploy a cluster for learning
+- **Docker desktop**'s kubernetes
+
+## Acknowledgments:
+Thank you [TechWorld with Nana](https://www.youtube.com/@TechWorldwithNana) for the free course!
+
+<br>
+<br>
+
+# README content from the original project below!
 ### Repository for the K8s in 1 hour video
 
 #### K8s manifest files 
